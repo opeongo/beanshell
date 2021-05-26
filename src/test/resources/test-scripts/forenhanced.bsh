@@ -11,7 +11,7 @@ al.add("gee");
 for ( a : al )
     b = a;
 assert(a == void);
-assert(b == void);
+assert(b != void);
 
 a="a";
 b="b";

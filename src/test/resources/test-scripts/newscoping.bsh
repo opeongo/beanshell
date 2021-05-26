@@ -88,7 +88,7 @@ for(ii=0; ii<3; ii++)
     this.ix=1;
 }
 assert( flag() == 3 );
-assert(ii==void);
+assert(ii==3);
 assert(ix==1);
 
 globThis=this;
@@ -98,7 +98,7 @@ globThis=this;
     this.foo=5;
 }
 assert( foo == 5 );
-assert( blockThis == void );
+assert( blockThis == this );
 
 // local assignment is equivalent to declaration
 bar() {

@@ -395,13 +395,24 @@ public class NameSpace
                     null);
             if (setProp)
                 return;
-            // If recurse, set global untyped var, else set it here.
-            // NameSpace varScope = recurse ? getGlobal() : this;
-            // This modification makes default allocation local
-            final NameSpace varScope = this;
-            varScope.variables.put(name,
-                    this.createVariable(name, value, null/* modifiers */));
-            this.nameSpaceChanged();
+
+            /*
+             * If strictJava then allocate in this namespace.
+             * If not then allow BlockNameSpace subclass to decide
+             * on the scope (in block or parent).
+             * 
+             * This restores the behaviour to that of BeanShell 2.0b5 
+             */
+            if (strictJava) {
+               // If recurse, set global untyped var, else set it here.
+               // NameSpace varScope = recurse ? getGlobal() : this;
+               // This modification makes default allocation local
+               final NameSpace varScope = this;
+               varScope.variables.put(name,
+                                      this.createVariable(name, value, null/* modifiers */));
+               this.nameSpaceChanged();
+            } else
+               setVariable(name, value, strictJava, recurse);
         }
     }
 

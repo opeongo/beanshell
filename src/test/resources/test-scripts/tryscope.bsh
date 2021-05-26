@@ -23,8 +23,8 @@ try {
 }
 
 assert( foo2 == void );
-assert( bar2 == void );
-assert( b2 == void );
+assert( bar2 == 5 );
+assert( b2 == 5 );
 assert( e2 ==  void );
 
 try {
