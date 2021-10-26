@@ -36,4 +36,12 @@ assert(b==6); // sanity check
 assert(s.a==5);
 assert(a==6);
 
+/*
+ * Make sure eval() is not broken in block scope
+ */
+{ eval("bb=b;"); }
+assert(bb == b);
+{ eval("bb=b;"); }
+assert(bb == b);
+
 complete();
