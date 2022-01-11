@@ -37,7 +37,7 @@ class BSHImportDeclaration extends SimpleNode
 
     BSHImportDeclaration(int id) { super(id); }
 
-    public Object eval( CallStack callstack, Interpreter interpreter)
+    public Object eval(CallStack callstack, Interpreter interpreter)
         throws EvalError
     {
         NameSpace namespace = callstack.top();

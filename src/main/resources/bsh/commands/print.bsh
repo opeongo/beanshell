@@ -20,7 +20,7 @@ bsh.help.print = "usage: print( value )";
 
 void print( arg )
 {
-	// Other packages are known to define a String class so best practice here to disambiguate
+    // Other packages are known to define a String class so best practice here to disambiguate
     if ( arg instanceof java.lang.String
             || (arg instanceof Primitive && arg.getType() == Character.TYPE)
             || arg instanceof CharSequence )
