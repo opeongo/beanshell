@@ -42,10 +42,33 @@ class BSHFormalParameters extends SimpleNode implements BshClassManager.Listener
 
     BSHFormalParameters(int id) { super(id); }
 
-    void insureParsed()
-    {
+    // void insureParsed()
+    // {
+        // if ( paramNames != null )
+        //     return;
+
+        // this.numArgs = jjtGetNumChildren();
+        // String [] paramNames = new String[numArgs];
+        // Modifiers [] paramModifiers = new Modifiers[numArgs];
+
+        // for(int i=0; i<numArgs; i++)
+        // {
+        //     BSHFormalParameter param = (BSHFormalParameter)jjtGetChild(i);
+        //     isVarArgs = param.isVarArgs;
+        //     paramNames[i] = param.name;
+        //     paramModifiers[i] = new Modifiers(Modifiers.PARAMETER);
+        //     if (param.isFinal)
+        //         paramModifiers[i].addModifier("final");
+        // }
+        // this.paramNames = paramNames;
+        // this.paramModifiers = paramModifiers;
+    // }
+
+    public void prepare() {
         if ( paramNames != null )
             return;
+
+        super.prepare();
 
         this.numArgs = jjtGetNumChildren();
         String [] paramNames = new String[numArgs];
@@ -65,12 +88,12 @@ class BSHFormalParameters extends SimpleNode implements BshClassManager.Listener
     }
 
     public Modifiers [] getParamModifiers() {
-        insureParsed();
+        // insureParsed();
         return paramModifiers;
     }
 
     public String [] getParamNames() {
-        insureParsed();
+        // insureParsed();
         return paramNames;
     }
 
@@ -80,7 +103,7 @@ class BSHFormalParameters extends SimpleNode implements BshClassManager.Listener
         if ( typeDescriptors != null )
             return typeDescriptors;
 
-        insureParsed();
+        // insureParsed();
         String [] typeDesc = new String[numArgs];
 
         for(int i=0; i<numArgs; i++)
@@ -104,7 +127,7 @@ class BSHFormalParameters extends SimpleNode implements BshClassManager.Listener
         if ( paramTypes != null )
             return paramTypes;
 
-        insureParsed();
+        // insureParsed();
         Class<?> [] paramTypes = new Class[numArgs];
 
         for(int i=0; i<numArgs; i++)
@@ -137,4 +160,3 @@ class BSHFormalParameters extends SimpleNode implements BshClassManager.Listener
     }
 
 }
-

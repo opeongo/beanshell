@@ -31,7 +31,7 @@ class BSHMethodDeclaration extends SimpleNode
 {
     public String name;
 
-    // Begin Child node structure evaluated by insureNodesParsed
+    // Begin Child node structure evaluated by prepare
 
     BSHReturnType returnTypeNode;
     BSHFormalParameters paramsNode;
@@ -51,14 +51,56 @@ class BSHMethodDeclaration extends SimpleNode
 
     BSHMethodDeclaration(int id) { super(id); }
 
+    // /**
+    //     Set the returnTypeNode, paramsNode, and blockNode based on child
+    //     node structure.  No evaluation is done here.
+    // */
+    // synchronized void insureNodesParsed()
+    // {
+        // if ( paramsNode != null ) // there is always a paramsNode
+        //     return;
+
+        // Object firstNode = jjtGetChild(0);
+        // firstThrowsClause = 1;
+        // if ( firstNode instanceof BSHReturnType )
+        // {
+        //     returnTypeNode = (BSHReturnType)firstNode;
+        //     paramsNode = (BSHFormalParameters)jjtGetChild(1);
+        //     if ( jjtGetNumChildren() > 2+numThrows )
+        //         blockNode = (BSHBlock)jjtGetChild(2+numThrows); // skip throws
+        //     ++firstThrowsClause;
+        // }
+        // else
+        // {
+        //     paramsNode = (BSHFormalParameters)jjtGetChild(0);
+        //     blockNode = (BSHBlock)jjtGetChild(1+numThrows); // skip throws
+        // }
+
+        // if (null != blockNode && blockNode.jjtGetNumChildren() > 0) {
+        //     Node crnt = blockNode.jjtGetChild(blockNode.jjtGetNumChildren() - 1);
+        //     if (crnt instanceof BSHReturnStatement)
+        //         while (crnt.hasNext())
+        //             if ((crnt = crnt.next()) instanceof BSHAmbiguousName)
+        //                 isScriptedObject = ((BSHAmbiguousName)crnt).text.startsWith("this");
+        // }
+
+        // paramsNode.insureParsed();
+        // isVarArgs = paramsNode.isVarArgs;
+    // }
+
     /**
-        Set the returnTypeNode, paramsNode, and blockNode based on child
-        node structure.  No evaluation is done here.
-    */
-    synchronized void insureNodesParsed()
-    {
+     * Set the returnTypeNode, paramsNode, and blockNode based on child
+     * node structure.  No evaluation is done here.
+     * <p>
+     * Check to see if this method returns a reference to the {@code this} object.
+     * If so then mark this method as having a dependency.
+     */
+    @Override
+    public void prepare() {
         if ( paramsNode != null ) // there is always a paramsNode
             return;
+
+        super.prepare();
 
         Object firstNode = jjtGetChild(0);
         firstThrowsClause = 1;
@@ -81,10 +123,13 @@ class BSHMethodDeclaration extends SimpleNode
             if (crnt instanceof BSHReturnStatement)
                 while (crnt.hasNext())
                     if ((crnt = crnt.next()) instanceof BSHAmbiguousName)
-                        isScriptedObject = ((BSHAmbiguousName)crnt).text.startsWith("this");
+                        if (((BSHAmbiguousName)crnt).text.startsWith("this"))
+                           isScriptedObject = hasThisDependent = true;;
         }
 
-        paramsNode.insureParsed();
+        if (hasThisDependent)
+            System.err.println(toString()+" returns this");
+
         isVarArgs = paramsNode.isVarArgs;
     }
 
@@ -95,7 +140,7 @@ class BSHMethodDeclaration extends SimpleNode
     Class<?> evalReturnType( CallStack callstack, Interpreter interpreter )
         throws EvalError
     {
-        insureNodesParsed();
+        // insureNodesParsed();
         if ( returnTypeNode != null )
             return returnTypeNode.evalReturnType( callstack, interpreter );
         else
@@ -105,7 +150,7 @@ class BSHMethodDeclaration extends SimpleNode
     String getReturnTypeDescriptor(
         CallStack callstack, Interpreter interpreter, String defaultPackage )
     {
-        insureNodesParsed();
+        // insureNodesParsed();
         if ( returnTypeNode == null )
             return null;
         else
@@ -114,7 +159,7 @@ class BSHMethodDeclaration extends SimpleNode
     }
 
     BSHReturnType getReturnTypeNode() {
-        insureNodesParsed();
+        // insureNodesParsed();
         return returnTypeNode;
     }
 
@@ -136,6 +181,8 @@ class BSHMethodDeclaration extends SimpleNode
 // so that we can re-eval params, etc. when classloader changes
 // look into this
         NameSpace namespace = callstack.top();
+        System.err.println("Instantiating method "+toString()+" hasThisDependent="+hasThisDependent+" namespace="+namespace);
+        assert(hasThisDependent == isScriptedObject);
         BshMethod bshMethod = new BshMethod( this, namespace, modifiers, isScriptedObject );
         if (!namespace.isMethod && !namespace.isClass)
             interpreter.getClassManager().addListener(bshMethod);
@@ -152,7 +199,7 @@ class BSHMethodDeclaration extends SimpleNode
     private void evalNodes( CallStack callstack, Interpreter interpreter )
         throws EvalError
     {
-        insureNodesParsed();
+        // insureNodesParsed();
 
         // validate that the throws names are class names
         for(int i=firstThrowsClause; i<numThrows+firstThrowsClause; i++)

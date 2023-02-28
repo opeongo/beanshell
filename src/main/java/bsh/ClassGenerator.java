@@ -197,7 +197,7 @@ public final class ClassGenerator {
             Node node = body.jjtGetChild(child);
             if (node instanceof BSHMethodDeclaration) {
                 BSHMethodDeclaration md = (BSHMethodDeclaration) node;
-                md.insureNodesParsed();
+                // md.insureNodesParsed();
                 Modifiers modifiers = md.modifiers;
                 String name = md.name;
                 String returnType = md.getReturnTypeDescriptor(callstack, interpreter, defaultPackage);

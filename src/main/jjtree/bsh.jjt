@@ -546,6 +546,13 @@ boolean Line() :
   }
 |
   BlockStatement() {
+      try {
+          if (jjtree.nodeArity() > 0)
+              jjtree.rootNode().prepare();
+      } catch (Exception ex) {
+          System.err.println("error while preparing");
+          ex.printStackTrace();
+      }
     return false;
   }
 }

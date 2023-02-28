@@ -67,6 +67,21 @@ public interface Node extends ListIterator<Node> {
      * @param prefix a prefix string */
     void dump(String prefix);
 
+    /**
+     * Prepare the node by performing any post-parse and pre-evaluation
+     * actions.  SUch action include steps currently found in the insureParsed
+     * methods.  Also could include constant folding and dead code elimination
+     * or any other pre-execution optimization.
+     */
+    void prepare();
+
+    /**
+     * Indicates if this node requires a context for use of a {@code this}
+     * reference.  If so then the node needs a persistent namespace
+     * object and cannot use a recycled one from the reference cache.
+     */
+    boolean hasThisDependent();
+
     /** Overloaded toString with prefix used by dump.
      * @param prefix a prefix string
      * @return toString with prefix */

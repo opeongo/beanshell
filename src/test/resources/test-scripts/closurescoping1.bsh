@@ -2,6 +2,8 @@
 
 source("TestHarness.bsh");
 
+System.err.println("start closurescoping1.bsh");
+
 foo() {
     this.a =1;
     bar() {

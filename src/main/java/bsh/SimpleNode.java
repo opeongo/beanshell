@@ -59,6 +59,7 @@ class SimpleNode implements Node, Serializable {
     protected Node[] children;
     protected int id;
     protected Parser parser;
+    protected boolean hasThisDependent;
     private int cursor = 0, lastRet = -1;
 
     /** Default constructor supplying the node with its type id.
@@ -174,6 +175,25 @@ class SimpleNode implements Node, Serializable {
 
     /** {@inheritDoc} */
     @Override
+    public void prepare() {
+        hasThisDependent = false;
+        for (Node node : jjtGetChildren()) {
+            node.prepare();
+            if (node.hasThisDependent()) {
+                hasThisDependent = true;
+                System.err.println(toString()+" is dependent parent="+toString());
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasThisDependent() {
+        return hasThisDependent;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public String toString() { return ParserTreeConstants.jjtNodeName[id]; }
 
     /** {@inheritDoc} */
@@ -232,7 +252,7 @@ class SimpleNode implements Node, Serializable {
             if ( !t.image.equals(".") )
                 text.append(" ");
             if ( t==lastToken ||
-                t.image.equals("{") || t.image.equals(";") )
+                 /*t.image.equals("{") ||*/ t.image.equals(";") )
                 break;
             t=t.next;
         }
@@ -244,4 +264,3 @@ class SimpleNode implements Node, Serializable {
     @Override
     public int getId() { return this.id; }
 }
-

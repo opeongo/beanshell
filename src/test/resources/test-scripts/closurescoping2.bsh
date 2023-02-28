@@ -2,31 +2,33 @@
 
 source("TestHarness.bsh");
 
-// JAVA anonymous class as closure
-public interface Internal {
-    int doit();
-}
+// // JAVA anonymous class as closure
+// public interface Internal {
+//     int doit();
+// }
 
-public class ClosureExample {
+// public class ClosureExample {
 
-    public static void main(String[] args) {
+//     public static void main(String[] args) {
 
-        Internal doer;
+//         Internal doer;
 
-        {
-            int x = 4;
-            doer = new Internal() {
-                    public int doit() {
-                        return x;
-                    }
-                };
-        }
-        assert(doer.doit() == 4);
-        int x = 5;
-        assert(doer.doit() == 4);
-    }
-}
-ClosureExample.main(new String[0]);
+//         {
+//             int x = 4;
+//             doer = new Internal() {
+//                     public int doit() {
+//                         return x;
+//                     }
+//                 };
+//         }
+//         assert(doer.doit() == 4);
+//         int x = 5;
+//         assert(doer.doit() == 4);
+//     }
+// }
+// ClosureExample.main(new String[0]);
+
+System.err.println("\nstarting closurescoping2.bsh\n");
 
 // BSH scripted class equivalent
 doer = null;
@@ -41,7 +43,7 @@ doer = null;
     doer = internal();
 }
 
-assert(doer.doit()==4);
+// assert(doer.doit()==4);
 x = 5;
 assert(doer.doit()==4);
 

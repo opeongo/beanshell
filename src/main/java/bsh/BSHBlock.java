@@ -111,12 +111,19 @@ class BSHBlock extends SimpleNode {
 
         Object ret = Primitive.VOID;
         final NameSpace enclosingNameSpace;
-        if ( null == overrideNamespace )
+        System.err.println("evaluate block="+toString()+" overrideNamespace="+overrideNamespace+" hasThisDependent="+hasThisDependent()+" lineNumber="+getLineNumber());
+        System.err.println("block contains "+getText()+"\n");
+        if (hasThisDependent())
+            overrideNamespace = true;
+        if ( null == overrideNamespace ) {
+            System.err.println("recycle a block namespace on the top of the stack");
             enclosingNameSpace = callstack.swap(
                 BlockNameSpace.getInstance(callstack.top(), blockId));
-        else if ( !overrideNamespace )
+        } else if ( !overrideNamespace ) {
+            System.err.println("allocate a new block namespace on the top of the stack");
             enclosingNameSpace = callstack.swap(
                 new BlockNameSpace(callstack.top(), blockId));
+        }
         else enclosingNameSpace = null;
 
         int startChild = isSynchronized ? 1 : 0;
@@ -187,4 +194,3 @@ class BSHBlock extends SimpleNode {
         return super.toString() + ": static=" + isStatic + ", synchronized=" + isSynchronized;
     }
 }
-
