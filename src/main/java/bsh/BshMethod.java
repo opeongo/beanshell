@@ -89,7 +89,7 @@ public class BshMethod implements Serializable, Cloneable, BshClassManager.Liste
             method.paramsNode.paramTypes, method.paramsNode.getParamModifiers(),
             method.blockNode, declaringNameSpace, modifiers, method.isVarArgs );
         this.isScriptedObject = isScriptedObject;
-        System.err.println(" short new BshMethod declaringNamespace="+((declaringNameSpace==null)?"null":declaringNameSpace.toString())+" isScriptedObject="+isScriptedObject);
+        // System.err.println(" short new BshMethod declaringNamespace="+((declaringNameSpace==null)?"null":declaringNameSpace.toString())+" isScriptedObject="+isScriptedObject);
     }
 
     BshMethod(
@@ -109,8 +109,8 @@ public class BshMethod implements Serializable, Cloneable, BshClassManager.Liste
         this.modifiers = modifiers;
         this.isVarArgs = isVarArgs;
 
-        if (!isScriptedObject)
-            System.err.println(" full new BshMethod declaringNamespace="+((declaringNameSpace==null)?"null":declaringNameSpace.toString())+" isScriptedObject="+isScriptedObject);
+        // if (!isScriptedObject)
+        //     System.err.println(" full new BshMethod declaringNamespace="+((declaringNameSpace==null)?"null":declaringNameSpace.toString())+" isScriptedObject="+isScriptedObject);
     }
 
     /*

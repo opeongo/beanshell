@@ -181,7 +181,7 @@ class SimpleNode implements Node, Serializable {
             node.prepare();
             if (node.hasThisDependent()) {
                 hasThisDependent = true;
-                System.err.println(toString()+" is dependent parent="+toString());
+                // System.err.println(toString()+" is dependent parent="+toString());
             }
         }
     }

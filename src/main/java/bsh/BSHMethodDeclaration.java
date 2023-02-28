@@ -127,8 +127,8 @@ class BSHMethodDeclaration extends SimpleNode
                            isScriptedObject = hasThisDependent = true;;
         }
 
-        if (hasThisDependent)
-            System.err.println(toString()+" returns this");
+        // if (hasThisDependent)
+        //     System.err.println(toString()+" returns this");
 
         isVarArgs = paramsNode.isVarArgs;
     }
@@ -181,7 +181,7 @@ class BSHMethodDeclaration extends SimpleNode
 // so that we can re-eval params, etc. when classloader changes
 // look into this
         NameSpace namespace = callstack.top();
-        System.err.println("Instantiating method "+toString()+" hasThisDependent="+hasThisDependent+" namespace="+namespace);
+        // System.err.println("Instantiating method "+toString()+" hasThisDependent="+hasThisDependent+" namespace="+namespace);
         assert(hasThisDependent == isScriptedObject);
         BshMethod bshMethod = new BshMethod( this, namespace, modifiers, isScriptedObject );
         if (!namespace.isMethod && !namespace.isClass)
