@@ -155,7 +155,7 @@ class BSHTryStatement extends SimpleNode
                     // parameter and swap it on the stack after initializing it.
 
                     NameSpace enclosingNameSpace = callstack.top();
-                    BlockNameSpace cbNameSpace = new BlockNameSpace(callstack.top(), blockId);
+                    BlockNameSpace cbNameSpace = new BlockNameSpace(callstack.top(), blockId, false);
 
                     try {
                         if ( mcType == BSHMultiCatch.UNTYPED )

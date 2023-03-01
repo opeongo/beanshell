@@ -109,6 +109,9 @@ public class BshMethod implements Serializable, Cloneable, BshClassManager.Liste
         this.modifiers = modifiers;
         this.isVarArgs = isVarArgs;
 
+        if ((name.equals("yield") || name.equals("output") || name.equals("treatment")) && name != declaringNameSpace.getName())
+            System.err.println("BshMethod constructor name="+name+" nsName="+declaringNameSpace.getName());
+
         // if (!isScriptedObject)
         //     System.err.println(" full new BshMethod declaringNamespace="+((declaringNameSpace==null)?"null":declaringNameSpace.toString())+" isScriptedObject="+isScriptedObject);
     }
@@ -466,6 +469,9 @@ public class BshMethod implements Serializable, Cloneable, BshClassManager.Liste
         // Push the new namespace on the call stack
         if ( !overrideNameSpace )
             callstack.push( localNameSpace );
+
+        if ((name.equals("yield") || name.equals("output") || name.equals("treatment")))
+                System.err.println("BshMethod.invokeImpl name="+name+" nsName="+localNameSpace.getName()+" overrideNameSpace="+overrideNameSpace);
 
         // Invoke the block, overriding namespace with localNameSpace
         Object ret = null;

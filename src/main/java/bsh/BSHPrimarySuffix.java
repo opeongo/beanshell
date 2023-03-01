@@ -244,7 +244,7 @@ class BSHPrimarySuffix extends SimpleNode
         Class<?> cls = obj.getClass();
         if ( ( interpreter.getStrictJava() || !(obj instanceof List) )
                 && !cls.isArray() )
-            throw new EvalError("Not an array or List type", this, callstack );
+            throw new EvalError("Not an array or List type "+obj+" "+cls.getName(), this, callstack );
 
         int length = obj instanceof List
                 ? ((List) obj).size() : Array.getLength(obj);
@@ -374,4 +374,3 @@ class BSHPrimarySuffix extends SimpleNode
         return super.toString() + ":NO OPERATION";
     }
 }
-

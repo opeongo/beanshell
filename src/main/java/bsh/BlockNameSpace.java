@@ -79,7 +79,7 @@ class BlockNameSpace extends NameSpace
         = new ReferenceCache<UniqueBlock, NameSpace>(Type.Weak, Type.Weak, 100) {
             /** Create block namespace based on unique block key as required */
             protected NameSpace create(UniqueBlock key) {
-                return new BlockNameSpace(key.ns, key.id);
+                return new BlockNameSpace(key.ns, key.id, true);
             }
     };
 
@@ -96,13 +96,16 @@ class BlockNameSpace extends NameSpace
         return ns;
     }
 
+    public boolean cached;
+
     /** Public constructor to create a non cached instance.
      * @param parent name space
      * @param blockId unique id for block */
-    public BlockNameSpace( NameSpace parent, int blockId )
+    public BlockNameSpace( NameSpace parent, int blockId, boolean cached )
     {
         super( parent, parent.getName()+ "/BlockNameSpace" + blockId );
         this.isMethod = parent.isMethod;
+        this.cached = cached;
     }
 
     /**
@@ -203,4 +206,3 @@ class BlockNameSpace extends NameSpace
         getParent().setMethod( method );
     }
 }
-

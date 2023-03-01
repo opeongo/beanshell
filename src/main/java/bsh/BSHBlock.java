@@ -113,8 +113,8 @@ class BSHBlock extends SimpleNode {
         final NameSpace enclosingNameSpace;
         // System.err.println("evaluate block="+toString()+" overrideNamespace="+overrideNamespace+" hasThisDependent="+hasThisDependent()+" lineNumber="+getLineNumber());
         // System.err.println("block contains "+getText()+"\n");
-        // if (hasThisDependent())
-        //     overrideNamespace = false;
+        if (null == overrideNamespace && hasThisDependent())
+            overrideNamespace = false;
         if ( null == overrideNamespace ) {
             // System.err.println("recycle a block namespace on the top of the stack");
             enclosingNameSpace = callstack.swap(
@@ -122,7 +122,7 @@ class BSHBlock extends SimpleNode {
         } else if ( !overrideNamespace ) {
             // System.err.println("allocate a new block namespace on the top of the stack");
             enclosingNameSpace = callstack.swap(
-                new BlockNameSpace(callstack.top(), blockId));
+                                                new BlockNameSpace(callstack.top(), blockId, false));
         }
         else enclosingNameSpace = null;
 

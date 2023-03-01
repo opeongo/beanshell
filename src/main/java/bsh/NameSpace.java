@@ -32,6 +32,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,6 +113,21 @@ public class NameSpace
      * are cached here (those which might be imported). Qualified names are
      * always absolute and are cached by BshClassManager. */
     private transient Map<String, Class<?>> classCache = new HashMap<>();
+    public boolean cached;
+
+    public boolean isCached() {
+        return cached;
+    }
+
+    public void list() {
+        NameSpace ns = this;
+        String tab = "";
+        while (ns != null) {
+            System.err.println(tab+"Name="+ns.nsName+" hash="+ns.hashCode()+" cached="+ns.cached+" variables="+ns.variables.keySet());
+            ns = ns.parent;
+            tab += " ";
+        }
+    }
 
     /** Sets the class static.
      * @param clas the new class static */

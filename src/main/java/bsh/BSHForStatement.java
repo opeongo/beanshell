@@ -52,7 +52,7 @@ class BSHForStatement extends SimpleNode implements ParserConstants
         final Node forUpdate = hasForUpdate ? jjtGetChild(i++) : null;
         final Node statement = i < jjtGetNumChildren() ? jjtGetChild(i) : null;
         final NameSpace enclosingNameSpace= callstack.top();
-        final NameSpace forNameSpace = new BlockNameSpace(enclosingNameSpace, blockId);
+        final NameSpace forNameSpace = new BlockNameSpace(enclosingNameSpace, blockId, false);
 
         /*
             Note: some interesting things are going on here.
@@ -71,6 +71,11 @@ class BSHForStatement extends SimpleNode implements ParserConstants
 
         // put forNameSpace on the top of the stack
         callstack.swap( forNameSpace );
+        if (enclosingNameSpace.getName().equals("yield") ||
+            enclosingNameSpace.getName().equals("event") ||
+            enclosingNameSpace.getName().equals("treatment") ||
+            enclosingNameSpace.getName().equals("output"))
+            forNameSpace.list();
         try {
             if ( hasForInit ) forInit.eval( callstack, interpreter );
             while( !Thread.interrupted() ) {
