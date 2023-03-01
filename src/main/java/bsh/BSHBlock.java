@@ -111,10 +111,11 @@ class BSHBlock extends SimpleNode {
 
         Object ret = Primitive.VOID;
         final NameSpace enclosingNameSpace;
-        if ( null == overrideNamespace )
-            enclosingNameSpace = callstack.swap(
-                BlockNameSpace.getInstance(callstack.top(), blockId));
-        else if ( !overrideNamespace )
+        // if ( null == overrideNamespace )
+        //     enclosingNameSpace = callstack.swap(
+        //         BlockNameSpace.getInstance(callstack.top(), blockId));
+        // else
+        if (null == overrideNamespace || !overrideNamespace )
             enclosingNameSpace = callstack.swap(
                 new BlockNameSpace(callstack.top(), blockId));
         else enclosingNameSpace = null;
@@ -187,4 +188,3 @@ class BSHBlock extends SimpleNode {
         return super.toString() + ": static=" + isStatic + ", synchronized=" + isSynchronized;
     }
 }
-
