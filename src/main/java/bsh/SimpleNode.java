@@ -44,7 +44,7 @@ import java.util.NoSuchElementException;
     try to remember to mark these as transient to highlight them.
 
 */
-class SimpleNode implements Node, Serializable {
+public class SimpleNode implements Node, Serializable {
 
     /** Serialization ID */
     private static final long serialVersionUID = 1L;
@@ -244,4 +244,3 @@ class SimpleNode implements Node, Serializable {
     @Override
     public int getId() { return this.id; }
 }
-
