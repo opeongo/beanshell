@@ -91,7 +91,7 @@ class BSHArrayInitializer extends SimpleNode {
         if ( -1 == dimensions ) {
             // apply strict java when loose type arrays or maps are invalid
             if ( interpreter.getStrictJava() )
-                throw new EvalError("No declared array type or dimensions.",
+                throw new EvalException("No declared array type or dimensions.",
                         this, callstack );
             // beans don't have dimensions, check if we can get out of here
             if (isBeanType(baseType))
@@ -165,7 +165,7 @@ class BSHArrayInitializer extends SimpleNode {
                             MapEntry.class, 1, callstack, interpreter);
                     else
                         // this is an invalid dimension, raise error
-                        throw new EvalError(
+                        throw new EvalException(
                             "Invalid Intializer for "+baseType+", at position: "+i,
                             this, callstack );
                 else
@@ -177,7 +177,7 @@ class BSHArrayInitializer extends SimpleNode {
                 entry = node.eval( callstack, interpreter);
 
             if ( entry == Primitive.VOID )
-                throw new EvalError(
+                throw new EvalException(
                     "Void in array initializer, position "+i, this, callstack );
 
             try {
@@ -214,7 +214,7 @@ class BSHArrayInitializer extends SimpleNode {
             }
             return bean;
         } catch (Throwable t) {
-            throw new EvalError(t.getMessage(), this, callstack, t);
+            throw new EvalException(t.getMessage(), this, callstack, t);
         } finally {
             callstack.pop();
         }
@@ -237,7 +237,7 @@ class BSHArrayInitializer extends SimpleNode {
             return Primitive.unwrap(
                     Types.castObject(value, baseType, Types.CAST));
         } catch ( UtilEvalError e ) {
-            throw e.toEvalError(
+            throw e.toEvalException(
                 "Error in array initializer", this, callstack );
         }
         // unwrap any primitive, map voids to null, etc.
@@ -384,7 +384,7 @@ class BSHArrayInitializer extends SimpleNode {
         throws EvalError {
         String rhsType = StringUtil.typeString(initializer);
 
-        throw new EvalError ( "Incompatible type: " + rhsType
+        throw new EvalException ( "Incompatible type: " + rhsType
             +" in initializer of array type: "+ baseType.getSimpleName()
             +" at position: "+argNum, this, callstack );
     }
