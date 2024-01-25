@@ -78,8 +78,8 @@ try {
 try {
     new {{false}, true};
 } catch (Exception ex) {
-    Matcher m = Pattern.compile("Incompatible type: (.*) in initializer of array type: (.*) at position: \\d+").matcher(ex.getMessage());
-    String err = "Expected [Incompatible type: (.*) in initializer of array type: (.*) at position: \\d+] got ["+ex.getMessage()+"]";
+    Matcher m = Pattern.compile("Error in array initializer: Cannot cast primitive value to object type \\[Z").matcher(ex.getMessage());
+    String err = "Expected [Error in array initializer: Cannot cast primitive value to object type \\[Z] got ["+ex.getMessage()+"]";
     assertTrue(err,m.find());
 } finally {
     flag();
