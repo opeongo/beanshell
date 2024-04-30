@@ -1,0 +1,23 @@
+#!/bin/java bsh.Interpreter
+
+source("TestHarness.bsh");
+source("Assert.bsh");
+
+bt = new BoundedType();
+
+bt.select(new BoundedType.A());
+
+c = bt.count(new Integer[]{0,1,2,3,4,5,6,7,8,9},Integer.valueOf(2));
+assertTrue("Check an Integer array", c == 2);
+
+c = bt.count(new String[]{"0","1","2","3","4","5","6","7","8","9"},"2");
+assertTrue("Check a String array", c == 2);
+
+isEvalError( """
+bt = new BoundedType();
+bt.count(new ArrayList[]{new ArrayList(), new ArrayList()},new ArrayList());
+""");
+
+bt.select(new BoundedType.B());
+
+complete();

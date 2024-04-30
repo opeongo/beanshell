@@ -206,8 +206,8 @@ public class BshClassManager {
         private Invocable findBest(List<Invocable> list, Class<?>[] types) {
             if (list.isEmpty())
                 return null;
-            if (list.size() == 1)
-                return list.get(0);
+           // if (list.size() == 1)
+           //     return list.get(0);
             return Reflect.findMostSpecificInvocable(types, list);
         }
 
