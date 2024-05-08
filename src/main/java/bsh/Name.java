@@ -33,7 +33,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
-import java.util.regex.Pattern;
 
 /**
     What's in a name?  I'll tell you...
@@ -181,7 +180,7 @@ class Name implements java.io.Serializable
     }
 
     /**
-        @see toObject()
+        @see #toObject(CallStack, Interpreter) toObject
         @param forceClass if true then resolution will only produce a class.
         This is necessary to disambiguate in cases where the grammar knows
         that we want a class; where in general the var path may be taken.
@@ -459,7 +458,7 @@ class Name implements java.io.Serializable
         @param callstack may be null, but this is only legitimate in special
         cases where we are sure resolution will not involve this.caller.
 
-        @param namespace the namespace of the this reference (should be the
+        @param thisNameSpace the namespace of the this reference (should be the
         same as the top of the stack?
     */
     Object resolveThisFieldReference(
@@ -861,7 +860,6 @@ class Name implements java.io.Serializable
         to load it as a resource from the imported command path (e.g.
         /bsh/commands)
     */
-    private static final Pattern noOverride = Pattern.compile("eval|assert");
     private Object invokeLocalMethod(
         Interpreter interpreter, Object[] args, CallStack callstack, Node callerInfo)
         throws EvalError
@@ -884,17 +882,8 @@ class Name implements java.io.Serializable
         }
 
         // If defined, invoke it
-        if ( meth != null ) {
-            // whether to use callstack.top or new child of declared name space
-            // enables late binding for closures and namespace chaining #676
-            boolean overrideChild = !namespace.isMethod
-                    && !meth.isScriptedObject
-                    && namespace.isChildOf(meth.declaringNameSpace)
-                    && !namespace.getParent().isClass
-                    && !noOverride.matcher(meth.getName()).matches();
-
-            return meth.invoke( args, interpreter, callstack, callerInfo, overrideChild );
-        }
+        if ( meth != null )
+            return meth.invoke( args, interpreter, callstack, callerInfo);
 
         // Look for a BeanShell command
         return namespace.invokeCommand(methodName, args, interpreter, callstack, callerInfo);
