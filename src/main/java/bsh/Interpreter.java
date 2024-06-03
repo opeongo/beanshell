@@ -444,7 +444,7 @@ public class Interpreter
         } else {
             try (FileReader readr = new FileReader(System.in);
                 Reader repl = new CommandLineReader(readr)) {
-                new Interpreter(repl, System.out, System.err, true).run();
+                new Interpreter(repl, System.out, System.err, false).run();
             } catch (IOException e) {
                 System.err.println("I/O Error closing command line reader: " + e);
             }

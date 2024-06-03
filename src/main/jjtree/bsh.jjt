@@ -52,12 +52,14 @@ options {
     NODE_USES_PARSER=false;
     */
 
-    /* Print grammar debugging info as we parse
+    /* Print grammar debugging info as we parse */
     DEBUG_PARSER=true;
-    */
-    /* Print detailed lookahead debugging info
-    DEBUG_LOOKAHEAD=true;
-    */
+
+    /* Print detailed lookahead debugging info */
+    DEBUG_LOOKAHEAD=false;
+
+    DEBUG_TOKEN_MANAGER=false;
+
 
     /*
         There are weird issues related to this flag.
@@ -981,16 +983,41 @@ void MethodInvocation() #MethodInvocation : { }
    AmbiguousName() Arguments()
 }
 
+void LambdaExpression() #Lambda :
+{}
+{
+    LambdaArguments()  <ARROW> Block()
+}
+
+void LambdaArguments() :
+{Token t;}
+{ LOOKAHEAD(3) Arguments()  |
+  (t=<IDENTIFIER> {
+    BSHFormalParameter fp = new BSHFormalParameter(JJTFORMALPARAMETER);
+    fp.name = t.image;
+    BSHFormalParameters fps = new BSHFormalParameters(JJTFORMALPARAMETERS);
+    fps.jjtAddChild(fp,0);
+    jjtree.pushNode(fps);
+    } )
+}
+
+void LambdaBody() :
+{}
+{ LOOKAHEAD(3) StatementExpression() | Block() }
+
 void PrimaryPrefix() : { }
 {
   Literal()
 |
-  "(" Expression() ")"
+  LOOKAHEAD(3) "(" Expression() ")"
 |
   AllocationExpression()
 |
   LOOKAHEAD( AmbiguousName() "(" ( Expression() | ")" ) )
     MethodInvocation()
+|
+  LOOKAHEAD( LambdaArguments()  <ARROW>  )
+   LambdaExpression()
 |
   LOOKAHEAD( Type() "." "class" )
     Type()
