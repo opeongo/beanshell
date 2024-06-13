@@ -52,14 +52,17 @@ options {
     NODE_USES_PARSER=false;
     */
 
-    /* Print grammar debugging info as we parse */
+    /* Print grammar debugging info as we parse
     DEBUG_PARSER=true;
+    */
 
-    /* Print detailed lookahead debugging info */
+    /* Print detailed lookahead debugging info
     DEBUG_LOOKAHEAD=false;
+     */
 
+     /*
     DEBUG_TOKEN_MANAGER=false;
-
+    */
 
     /*
         There are weird issues related to this flag.
