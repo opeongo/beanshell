@@ -261,8 +261,20 @@ public class NameSpace
      * @throws UtilEvalError the util eval error */
     public Variable setLocalVariable(String name, Object value,
                                      int compatibilityFlags)
-        throws UtilEvalError {
+            throws UtilEvalError {
         return setVariable(name, value, compatibilityFlags, false/* recurse */);
+    }
+
+    /** Set a variable explicitly in the local scope.
+     * @param name the name
+     * @param value the value
+     * @param strictJava Set strict java mode
+     * @return the variable
+     * @throws UtilEvalError the util eval error */
+    public Variable setLocalVariable(String name, Object value,
+                                     boolean strictJava)
+            throws UtilEvalError {
+        return setVariable(name, value, strictJava?COMPATIBILITY_STRICT_JAVA:0, false/* recurse */);
     }
 
     /** Set the value of a the variable 'name' through this namespace. The
