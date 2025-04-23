@@ -84,6 +84,17 @@ public class TryStatementTest {
     }
 
     @Test
+    public void try_with_resource_parsing_nocatch() throws Exception {
+        Object resource = eval(
+            "try (ByteArrayOutputStream x = new ByteArrayOutputStream()) {",
+                "return x;",
+            "}"
+        );
+        assertThat(resource, instanceOf(AutoCloseable.class));
+        assertThat(resource, instanceOf(ByteArrayOutputStream.class));
+    }
+
+    @Test
     public void try_with_resource_parsing_multi() throws Exception {
         Object resource = eval(
             "try (ByteArrayOutputStream x = new ByteArrayOutputStream(); ByteArrayOutputStream y = new ByteArrayOutputStream()) {",
