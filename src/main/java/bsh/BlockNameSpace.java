@@ -98,7 +98,8 @@ class BlockNameSpace extends NameSpace
      * @param blockId unique id for block
      * @return new or cached instance of a unique block name space */
     public static NameSpace getInstance(NameSpace parent, int blockId ) {
-        BlockNameSpace ns = blockspaces.get(new UniqueBlock(parent, blockId));
+//        BlockNameSpace ns = blockspaces.get(new UniqueBlock(parent, blockId));
+        BlockNameSpace ns = new BlockNameSpace(parent, blockId);
         ns.clear();
         return ns;
     }

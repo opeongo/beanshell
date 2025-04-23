@@ -10,8 +10,8 @@ ths = this;
 assert( !(this.namespace instanceof bsh.BlockNameSpace) );
 
 booga() { return "booga"; }
-assert(booga() == "booga");
-assert(this.booga() == "booga");
+assert(booga().equals("booga"));
+assert(this.booga().equals("booga"));
 
 if ( true )
 {
@@ -35,7 +35,7 @@ if ( true )
   assert(foo==5);
   assert(this.foo==5);
   goo() { return "goo"; }
-  assert(goo() == "goo");
+  assert(goo().equals("goo"));
   //this.goo(); // doesn't work.  If it's important see NameSpace.java comment.
 }
 

@@ -30,7 +30,7 @@ package bsh;
 
 public final class BSHLiteral extends SimpleNode
 {
-    public static volatile boolean internStrings = true;
+    public static volatile boolean internStrings = false;
 
     public Object value;
 

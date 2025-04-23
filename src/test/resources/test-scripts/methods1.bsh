@@ -3,7 +3,7 @@
 source("TestHarness.bsh");
 
 foo() { a = "foo"; return this; }
-assert(foo().a == "foo");
+assert(foo().a.equals("foo"));
 
 bar( a ) { assert(a==5); }
 bar( 5 );
@@ -48,4 +48,3 @@ try { eval("blah();"); } catch ( bsh.EvalError e ) {
 assert( flag() == 6 );
 
 complete();
-
