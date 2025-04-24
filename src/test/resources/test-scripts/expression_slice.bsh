@@ -767,7 +767,6 @@ assertThat(swap, valueString('"123123123"'));
 swap = 1 * strstr;
 
 assertEquals(2, {1,2}[1]);
-assertEquals(2, {1,2}["1"]);
 assertEquals(2, {1,2}[true]);
 
 // slice exceptions

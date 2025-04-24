@@ -424,7 +424,7 @@ public class InterpreterTest {
 
             bsh.setExitOnEOF(false);
             bsh.run();
-            assertThat(baos.toString(), containsString("Internal Error: cannot cast string \"\" to number"));
+            assertThat(baos.toString(), containsString("Error: Target Exception: Cannot cast String with value \"\" to int"));
         }
     }
 

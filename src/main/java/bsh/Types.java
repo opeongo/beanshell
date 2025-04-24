@@ -575,7 +575,7 @@ class Types {
                 return Primitive.castPrimitive( toType, fromType, (Primitive) fromValue,
                     checkOnly, operation );
             } else {
-                if (((Types.isNumeric(fromType) || String.valueOf(fromValue).matches("[-+0-9.]*"))
+                if (((Types.isNumeric(fromType) )
                         && Types.isNumeric(toType)) || toType == Boolean.TYPE) {
                     // Auto widening and narrowing of primitive numeric types
                     if (checkOnly)
