@@ -32,6 +32,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ import static bsh.Interpreter.COMPATIBILITY_BSH2_VARIABLE_SCOPING;
 
 /** A namespace in which methods, variables, and imports (class names) live.
  * This is package public because it is used in the implementation of some bsh
- * commands. However for normal use you should be using methods on
+ * commands. However, for normal use you should be using methods on
  * bsh.Interpreter to interact with your scripts.
  * <p>
  * A bsh.This object is a thin layer over a NameSpace that associates it with an
@@ -500,7 +501,9 @@ public class NameSpace
         (This does not show variables in parent namespaces).
     */
     public String [] getVariableNames() {
-        return this.variables.keySet().stream().toArray(String[]::new);
+        String[] m = this.variables.keySet().toArray(new String[0]);
+        Arrays.sort(m, String.CASE_INSENSITIVE_ORDER);
+        return m;
     }
 
     /**
@@ -517,7 +520,9 @@ public class NameSpace
     */
     public String [] getMethodNames()
     {
-        return this.methods.keySet().stream().toArray(String[]::new);
+        String[] m = this.methods.keySet().toArray(new String[0]);
+        Arrays.sort(m, String.CASE_INSENSITIVE_ORDER);
+        return m;
     }
 
     /** Get the methods defined in this namespace. (This does not show methods

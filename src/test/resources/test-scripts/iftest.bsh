@@ -59,13 +59,12 @@ else
     a = 33;
 assert(a == 22);
 
-// cast condition to boolean
-if ('cast string to boolean')
-    flag();
-assert(flag() == 3);
+assert(flag() == 2);
 // was error:
 //assert(isEvalError("Condition must evaluate to a Boolean or boolean", "if ('not a boolean');"));
 
+// cast condition to boolean
+assert(isEvalError("cannot cast String to boolean", "if ('cast string to boolean') flag();"));
 assert(isEvalError("Condition evaluates to void type", "if (unsetVar);"));
 
 complete();

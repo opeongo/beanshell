@@ -734,8 +734,7 @@ f123=d123;
 assert( d123.getType() == Double.TYPE );
 assert( f123.getType() == Float.TYPE );
 
-d123=true;
-assert(d123 == 1.0d);
+assert(isEvalError("bad type in cast true", "d123=true"));
 d123=null;
 assert(d123 == 0.0d);
 Integer nullInt = Integer.valueOf(123);

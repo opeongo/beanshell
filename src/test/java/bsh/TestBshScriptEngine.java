@@ -240,7 +240,6 @@ public class TestBshScriptEngine {
         assertThat(e.getCause().getMessage(), containsString("Command not found: cd(Integer)"));
         e = assertThrows(InterpreterError.class, () -> bshThis.invokeMethod("square", new Object[] {""}));
         assertThat(e.getMessage(), containsString("cannot cast string \"\" to number"));
-        assertThat(e.getCause().getMessage(), containsString("empty String"));
     }
 
     @Test

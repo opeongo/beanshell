@@ -64,4 +64,3 @@ complete() {
 flag() {
     return super.test_flag++;
 }
-

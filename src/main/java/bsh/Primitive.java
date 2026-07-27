@@ -219,8 +219,8 @@ public final class Primitive implements Serializable {
         if (value instanceof Number)
             return (Number) value;
 
-        if (value instanceof Boolean)
-            return (Boolean) value ? 1 : 0;
+//        if (value instanceof Boolean)
+//            return (Boolean) value ? 1 : 0;
 
         throw new InterpreterError("Primitive not a number");
     }
@@ -513,25 +513,28 @@ public final class Primitive implements Serializable {
         if ( toType == Boolean.TYPE ) {
             if ( value instanceof Boolean )
                 return value;
-            else if ( value instanceof String )
-                return !"".equals(String.valueOf(value));
-            else if ( value instanceof Number )
-                return ((Number) value).intValue() != 0;
-            else
-                return value != null;
+            throw new InterpreterError("cannot cast "+((value==null)?"null":value.getClass().getSimpleName())+" to boolean");
+//            else if ( value instanceof String )
+//                return !"".equals(String.valueOf(value));
+//            else if ( value instanceof Number )
+//                return ((Number) value).intValue() != 0;
+//            else
+//                return value != null;
         }
 
         if ( value == null && toType.isPrimitive() )
             value = Primitive.unwrap(getDefaultValue(toType));
+//            throw new InterpreterError("cannot convert null to primitive");
 
-        if ( value instanceof String ) try {
-            value = Double.parseDouble(String.valueOf(value));
-        } catch (NumberFormatException nfe) {
-            throw new InterpreterError("cannot cast string \""+value+"\" to number", nfe);
-        }
+        if ( value instanceof String )
+//            try {
+//            value = Double.parseDouble(String.valueOf(value));
+//        } catch (NumberFormatException nfe) {
+            throw new InterpreterError("cannot cast string \""+value+"\" to number");
+//        }
 
-        if ( value instanceof Boolean )
-            value = (Boolean) value ? 1 : 0;
+//        if ( value instanceof Boolean )
+//            value = (Boolean) value ? 1 : 0;
 
         if ( !(value instanceof Number) )
             throw new InterpreterError("bad type in cast "+StringUtil.typeValueString(value));

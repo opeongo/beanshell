@@ -152,7 +152,17 @@ public class BshMethod implements Serializable, Cloneable, BshClassManager.Liste
     }
 
     public String [] getParameterNames() {
-        if (null == paramNames)
+        boolean generateNames = false;
+        if (paramNames == null)
+            generateNames = true;
+        else {
+            for (String name: paramNames)
+                if (name == null) {
+                    generateNames = true;
+                    break;
+                }
+        }
+        if (generateNames)
             paramNames = IntStream.range(97, 97+getParameterCount())
             .boxed().map(n->String.valueOf((char) n.intValue()))
             .toArray(String[]::new);
