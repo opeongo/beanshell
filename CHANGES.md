@@ -9,6 +9,8 @@ Fixed calling an interface default method the script doesn't define, such as `Co
 
 The Maven groupId is now `io.github.beanshell` (was `org.beanshell`), so update your dependency to `io.github.beanshell:bsh`. The OSGi bundle symbolic name stays `org.beanshell.bsh` (#769).
 
+Fixed a `NoClassDefFoundError` aborting a script on a case-insensitive file system (e.g. Windows) when a loosely typed variable's name differs only in case from an imported or same-named class, such as a variable `topology` next to a class `Topology`. Looking up `topology` tried to load a class of that name, which resolved to the `Topology` class file and failed with a "wrong name" mismatch instead of being treated as "not a class" and resolved as a variable.
+
 
 ## 3.0.0 beta 1
 

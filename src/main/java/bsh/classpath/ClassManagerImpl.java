@@ -165,7 +165,8 @@ public class ClassManagerImpl extends BshClassManager
         Error escape and abort the script.
     */
     private static void rethrowUnlessWrongName( NoClassDefFoundError nce ) {
-        if ( !nce.getMessage().contains("wrong name") )
+        final String message = nce.getMessage();
+        if ( message == null || !message.contains("wrong name") )
             throw nce;
     }
 
