@@ -328,6 +328,13 @@ public class ClassManagerImpl extends BshClassManager
         return (InputStream) in;
     }
 
+    @Override
+    public void forgetAnonymousClass( String name ) {
+        super.forgetAnonymousClass( name );
+        loaderMap.remove( name );
+        baseClassPath.removeClassSource( name );
+    }
+
     ClassLoader getLoaderForClass( String name ) {
         return (ClassLoader)loaderMap.get( name );
     }
