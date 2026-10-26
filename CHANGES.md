@@ -3,6 +3,8 @@
 
 ## 3.0.0 (in progress)
 
+Fixed assigning to a final Java field, such as `Integer.MAX_VALUE = 1;`, reporting only `can't access field: java.lang.reflect.InvocationTargetException`. The error now names the reason, `IllegalAccessException: static final field has no write access`, as BeanShell 2.x did. Trying again after the field had been read gave a `NullPointerException` as the reason; it now gives the same error each time.
+
 Fixed a `byte` or `short` argument picking a Java method's `char` overload, so `byte b = 65; System.out.println(b);` printed `A` instead of 65, and a negative `byte` threw. It now picks the `int` overload, as Java and BeanShell 2.x do, so `Character.toUpperCase(b)` returns an `int`. A `byte` or `short` value is now passed to a `char` parameter only where an `int` value would be, so calls such as `"aaa".replace(b, c)` or a scripted method `g(char c)` called as `g(b)` no longer find the method; cast with `(char) b` (#916).
 
 ## 3.0.0 RC2
