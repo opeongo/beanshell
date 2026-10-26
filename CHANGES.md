@@ -3,6 +3,8 @@
 
 ## 3.0.0 (in progress)
 
+After `import static C.*;`, a variable can have the same name as one of `C`'s instance fields, as in Java, where a static import brings in only static members. Before, `import static java.awt.GridBagConstraints.*; int anchor = NORTH;` failed with "Can't reach instance field: anchor from static context", an error no `catch` could see, and such a variable couldn't be declared, assigned or read.
+
 Fixed a `byte` or `short` argument picking a Java method's `char` overload, so `byte b = 65; System.out.println(b);` printed `A` instead of 65, and a negative `byte` threw. It now picks the `int` overload, as Java and BeanShell 2.x do, so `Character.toUpperCase(b)` returns an `int`. A `byte` or `short` value is now passed to a `char` parameter only where an `int` value would be, so calls such as `"aaa".replace(b, c)` or a scripted method `g(char c)` called as `g(b)` no longer find the method; cast with `(char) b` (#916).
 
 ## 3.0.0 RC2
