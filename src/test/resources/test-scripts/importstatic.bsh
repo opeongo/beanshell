@@ -51,5 +51,18 @@ x = 4;
 assertEquals(4, x);
 assertEquals(5, new Fields().x);
 
+// an error from looking up an operand's variable is reported, not dropped:
+// after the unset, a resolves to the instance field, which a static method
+// can't reach
+class Holder {
+    int a;
+    static Object compare() {
+        Object a = null;
+        return a == eval("unset(\"a\"); 1");
+    }
+}
+
+assertTrue(isEvalError("Can't reach instance field: a", "Holder.compare();"));
+
 complete();
 
